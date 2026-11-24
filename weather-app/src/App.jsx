@@ -11,9 +11,7 @@ function App() {
       <h1>Weather Forecast App</h1>
 
       <CityList selectCity={setSelectedCity} />
-
-      {selectedCity &&(
-      <CityForecast city={selectedCity} />)}
+      <CityForecast selectedCity={selectedCity} />
 
     </div>
   )

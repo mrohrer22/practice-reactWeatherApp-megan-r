@@ -16,20 +16,39 @@ const weatherData = {
 }; 
 
 export default function CityForecast({selectedCity}) {
-    console.log(selectedCity);
+    const [forecast, setForecast] = useState({});
+    const [showDetails, setShowDetails] = useState(false);
+
+    const detailsRef = useRef(null);
+
     useEffect (() => { 
         
-        if (!selectedCity) {
-            {"Please select a city"};
+        if (selectedCity) {
+            setForecast(weatherData[selectedCity]);
+            
         } else {
-            setSelectCity(weatherData[selectedCity])
-        };
-    }, [selectedCity])
+            setForecast({
+            summary: "City not found",
+            });
+        }
+            setShowDetails(false);
+        }, [selectedCity]);
     
+    function viewDetails() {
+        setShowDetails(true);
+  }
 
     return (
         <div>
-            <h2>{weatherData[selectedCity]} Forecast</h2>
+            <h2>{selectedCity} Forecast</h2>
+                <p>{forecast.summary}</p>
+                <button onClick={viewDetails}>View Details</button>
+                {showDetails && (
+                <div ref={detailsRef}>
+                    <h3>Weather Details</h3>
+                    <p>{forecast.details}</p>
+                </div>
+                )}
         </div>
     )
 }
